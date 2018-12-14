@@ -263,7 +263,7 @@ pretrain_model = "models/VGGNet/VGG_ILSVRC_16_layers_fc_reduced.caffemodel"
 label_map_file = "data/widerface/labelmap_voc.prototxt"
 
 # MultiBoxLoss parameters.
-num_classes = 21
+num_classes = 2
 share_location = True
 background_label_id=0
 train_on_diff_gt = True
@@ -303,7 +303,7 @@ min_dim = 300
 # conv7_2 ==> 5 x 5
 # conv8_2 ==> 3 x 3
 # conv9_2 ==> 1 x 1
-mbox_source_layers = ['conv4_3', 'fc7', 'conv6_2', 'conv7_2', 'conv8_2', 'conv9_2']
+mbox_source_layers = ['conv4_3', 'conv5_3', 'conv6_2', 'conv7_2', 'conv8_2', 'conv9_2']
 # in percent %
 min_ratio = 20
 max_ratio = 90
@@ -329,7 +329,7 @@ clip = False
 
 # Solver parameters.
 # Defining which GPUs to use.
-gpus = "0,1,2,3"
+gpus = "0"
 gpulist = gpus.split(",")
 num_gpus = len(gpulist)
 
@@ -356,7 +356,7 @@ elif normalization_mode == P.Loss.FULL:
   base_lr *= 2000.
 
 # Evaluate on whole test set.
-num_test_image = 4952
+num_test_image = 100
 test_batch_size = 8
 # Ideally test_batch_size should be divisible by num_test_image,
 # otherwise mAP will be slightly off the true value.
@@ -367,12 +367,12 @@ solver_param = {
     'base_lr': base_lr,
     'weight_decay': 0.0005,
     'lr_policy': "multistep",
-    'stepvalue': [80000, 100000, 120000],
+    'stepvalue': [2000, 5000, 8000],
     'gamma': 0.1,
     'momentum': 0.9,
     'iter_size': iter_size,
     'max_iter': 120000,
-    'snapshot': 80000,
+    'snapshot': 1000,
     'display': 10,
     'average_loss': 10,
     'type': "SGD",
